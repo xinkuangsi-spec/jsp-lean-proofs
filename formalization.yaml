@@ -1,0 +1,116 @@
+# formalization.yaml (v0.3): repo-root metadata for formalization projects.
+# Schema: https://github.com/mathlib-initiative/formalization.yaml
+
+version: "v0.3"
+
+project:
+  name: "jsp-lean-proofs"
+  authors: ["xinkuangsi-spec"]
+  license: "Apache-2.0"
+
+sources:
+  - title: "Justin Sun Prize problem bank"
+    authors: ["TheJustinSunPrize"]
+    id: "https://github.com/TheJustinSunPrize/awards/tree/main/problems"
+    type: "problem database entry"
+  - title: "Erdős Problem #346 (JSP-000288 problem statement)"
+    authors: ["Paul Erdős; page curated by Thomas F. Bloom"]
+    id: "https://www.erdosproblems.com/346"
+    type: "problem database entry"
+  - title: "Erdős Problem #1064 / Guy B42 (JSP-000884 problem statement)"
+    authors: ["Paul Erdős / Richard K. Guy"]
+    id: "https://www.erdosproblems.com/1064"
+    type: "problem database entry"
+  - title: "Erdős Problem #1140 (JSP-000945 problem statement)"
+    authors: ["Paul Erdős; page curated by Thomas F. Bloom"]
+    id: "https://www.erdosproblems.com/1140"
+    type: "problem database entry"
+
+status:
+  scope: >
+    Three self-contained Lean 4 + Mathlib formalizations, one file per
+    problem under JspProofs/. JSP-000288: explicit lacunary
+    strongly-complete counterexample sequence (growth ratio >= 6/5,
+    complete after any finite deletion, incomplete after a specified
+    infinite deletion) whose consecutive quotients do not converge.
+    JSP-000884: each of the three comparisons between totient(n) and
+    totient(n - totient(n)) holds for infinitely many n, via explicit
+    families 2^(k+2), 3*2^(k+1), 15*2^(k+1); the quantitative
+    density-one strengthening (Luca-Pomerance) is outside scope and
+    flagged in the file header. JSP-000945: explicit witness n = 199
+    (plus all 8 known values) such that every n - 2x^2 with 2x^2 < n
+    is prime.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "Erdos346.jsp_000288_answer"
+      file: "JspProofs/Jsp000288.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "jsp_000884_answer"
+      file: "JspProofs/Jsp000884.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+    - declaration: "jsp_000945_answer"
+      file: "JspProofs/Jsp000945.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      literature_dependencies: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["SWE-2 Max"]
+      framework: "Devin (Cognition)"
+      tool_setup: >
+        Proofs produced by the Cognition Devin agent under the account
+        owner's direction: problem scoping, Lean authoring, local
+        `lake env lean` verification and axiom audits, and iterative
+        error repair. The human account owner directed the work and
+        is the claimant of record.
+      cost:
+        wall_time: "not recorded"
+        spend_usd: "not recorded"
+        hardware: "local"
+      prompting_notes: ""
+  notes: >
+    AI-assisted formalization; AI assistance is disclosed in the
+    associated award-claim issues.
+
+fidelity:
+  divergences: >
+    JSP-000884: the formalization covers the qualitative answer
+    (each of the three comparisons holds infinitely often); the
+    stronger density-one statement (Luca-Pomerance) is documented as
+    out of scope in the file header and in the catalog PR scope note.
+
+review:
+  status: "author-verified"
+  reviewers: []
+  notes: >
+    Full `lake build` reproduced locally (v4.34.0 + Mathlib v4.34.0);
+    `#print axioms` on each final theorem reports only
+    [propext, Classical.choice, Quot.sound].
+
+alignment:
+  namespace: "JspProofs"
+  statements:
+    - source: "JSP-000288 catalog problem description"
+      lean: "Erdos346.jsp_000288_answer"
+      module: "JspProofs/Jsp000288.lean"
+      status: "proved"
+    - source: "JSP-000884 catalog problem description"
+      lean: "jsp_000884_answer"
+      module: "JspProofs/Jsp000884.lean"
+      status: "proved"
+    - source: "JSP-000945 catalog problem description"
+      lean: "jsp_000945_answer"
+      module: "JspProofs/Jsp000945.lean"
+      status: "proved"
+
+acknowledgements: >
+  Built on Mathlib; thanks to the Mathlib community and to
+  Thomas Bloom for erdosproblems.com.
